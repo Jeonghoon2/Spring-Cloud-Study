@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.userserivcel.mapper.UserMapper">
+
+    <insert id="createUser" parameterType="com.example.userserivcel.dto.UserDto">
+        INSERT INTO user (email,
+                          name,
+                          password,
+                          create_date,
+                          userid
+                          )
+        values (#{email},
+                #{name},
+                #{pwd},
+                #{createAt},
+                #{userid}
+                )
+    </insert>
+</mapper>
