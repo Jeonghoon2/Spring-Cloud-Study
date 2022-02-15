@@ -19,4 +19,16 @@
                 #{userid}
                 )
     </insert>
+
+    <select id="getUserByAll" parameterType="java.util.HashMap" resultType="Map">
+        SELECT *
+        FROM user
+    </select>
+
+    <select id="getUserById" resultType="com.example.userserivcel.dto.UserDto">
+        SELECT *
+        FROM user
+        where userid = #{userid}
+    </select>
+
 </mapper>
