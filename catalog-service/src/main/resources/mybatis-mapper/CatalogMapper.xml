@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.catalogservice.mapper.CatalogMapper">
+
+    <select id="getAllCatalogs" parameterType="java.util.HashMap" resultType="Map">
+        SELECT *
+        FROM catalog
+    </select>
+
+    <select id="getUserById" resultType="com.example.catalogservice.dto.CatalogDto">
+        SELECT *
+        FROM user
+        where userid = #{userid}
+    </select>
+
+</mapper>
