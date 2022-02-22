@@ -5,6 +5,9 @@ import com.example.userserivcel.dto.UserDto;
 import com.example.userserivcel.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,10 +19,22 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     final UserMapper userMapper;
     final BCryptPasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserDto userDto = userMapper.findByEmail(email);
+
+        if (userDto ==null)
+            throw new UsernameNotFoundException(email);
+
+        return new User(userDto.getEmail(),userDto.getPwd(),
+                true,true,true,true,
+                new ArrayList<>());
+    }
 
     @Autowired
     public UserService(UserMapper userMapper, BCryptPasswordEncoder passwordEncoder) {
@@ -32,7 +47,7 @@ public class UserService {
 
     public void createUser(UserDto userDto) {
         userDto.setCreateAt(now);
-        userDto.setUserid(UUID.randomUUID().toString());
+        userDto.setUserId(UUID.randomUUID().toString());
         userDto.setPwd(passwordEncoder.encode(userDto.getPwd()));
         userMapper.createUser(userDto);
     }
@@ -55,6 +70,10 @@ public class UserService {
 
     public List<OrderDto> order(OrderDto orderDto){
         return null;
+    }
+
+    public UserDto getUserDetailByEmail(String email) {
+        return userMapper.findByEmail(email);
     }
 }
 

@@ -17,4 +17,7 @@ public interface UserMapper {
     //전체 유저 불러오기
     List<UserDto> getUserByAll();
 
+    UserDto findByEmail(String email);
+
+    UserDto getUserDetailByEmail(String email);
 }

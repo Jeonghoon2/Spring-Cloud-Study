@@ -5,18 +5,27 @@
 
 <mapper namespace="com.example.userserivcel.mapper.UserMapper">
 
+    <resultMap type="com.example.userserivcel.dto.UserDto"
+               id="userInfo" >
+        <result property="email" column="email"/>
+        <result property="name" column="name"/>
+        <result property="pwd" column="password"/>
+        <result property="createAt" column="create_date"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+
     <insert id="createUser" parameterType="com.example.userserivcel.dto.UserDto">
         INSERT INTO user (email,
                           name,
                           password,
                           create_date,
-                          userid
+                          user_id
                           )
         values (#{email},
                 #{name},
                 #{pwd},
                 #{createAt},
-                #{userid}
+                #{userId}
                 )
     </insert>
 
@@ -29,6 +38,12 @@
         SELECT *
         FROM user
         where userid = #{userid}
+    </select>
+
+    <select id="findByEmail" resultMap="userInfo">
+        select *
+        from user
+        where email = #{email}
     </select>
 
 </mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.orderservice.mapper.OrderMapper">
+
+    <insert id="createOrder" parameterType="com.example.orderservice.dto.OrderDto">
+        INSERT INTO orders (
+            order_id,
+            product_id,
+            qty,
+            unit_price,
+            total_price,
+            create_date,
+            user_email)
+            values
+                   (#{orderId},
+                    #{productId},
+                    #{qty},
+                    #{unitPrice},
+                    #{totalPrice},
+                    #{createAt},
+                    #{userEmail}
+            )
+    </insert>
+
+    <select id="findByOrderId" resultType="com.example.orderservice.dto.OrderDto">
+        select *
+        from orders
+        where order_id = #{orderId}
+    </select>
+
+    <select id="findByUserEmail" parameterType="java.util.HashMap" resultType="Map">
+        select *
+        from orders
+        where user_email = #{userEmail}
+    </select>
+
+
+</mapper>

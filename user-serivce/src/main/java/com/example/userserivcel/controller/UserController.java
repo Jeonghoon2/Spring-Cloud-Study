@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user-service/")
+@RequestMapping("")
 public class UserController {
 
     final UserService userService;
@@ -27,7 +27,7 @@ public class UserController {
         env.getProperty("local.server.port"));
     }
 
-    @GetMapping("/find_all")
+    @GetMapping("/users")
     public ResponseEntity<Iterable<UserDto>> getUser(){
         Iterable<UserDto> userlist = userService.userByAll();
         return ResponseEntity.status(HttpStatus.OK)

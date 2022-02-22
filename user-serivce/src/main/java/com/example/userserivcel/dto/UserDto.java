@@ -16,8 +16,8 @@ public class UserDto {
     private String email;
     private String name;
     private String pwd;
-    private String userid;
     private LocalDate createAt;
+    private String userId;
 
     private List<OrderDto> orders;
 
