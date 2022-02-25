@@ -64,8 +64,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        String userEmail = ((User)authResult.getPrincipal()).getUsername();
-        UserDto userDetails = userService.getUserDetailByEmail(userEmail);
+        String userId = ((User)authResult.getPrincipal()).getUsername();
+        UserDto userDetails = userService.getUserDetailByEmail(userId);
 
         String toekn = Jwts.builder()
                 .setSubject(userDetails.getUserId())
