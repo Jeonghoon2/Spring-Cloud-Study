@@ -32,6 +32,12 @@ dependencies {
 
     implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
     compileOnly 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+
+
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-config:3.1.0'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.0'
 }
 
 dependencyManagement {
