@@ -4,11 +4,16 @@ server:
 spring:
   application:
     name: user-service
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ecommerce
-    username: root
-    password: cos1234
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+#  datasource:
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/ecommerce
+#    username: root
+#    password: cos1234
 
 mybatis:
   type-aliases-package: com.example.mappertut.model
@@ -31,7 +36,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: ["beans", "health", "refresh"]
+        include: ["beans", "health", "refresh", "busrefresh"]
 
 #token:
 #  expiration_time: 86400000
