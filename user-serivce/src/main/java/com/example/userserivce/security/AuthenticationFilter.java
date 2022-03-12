@@ -1,10 +1,9 @@
-package com.example.userserivcel.security;
+package com.example.userserivce.security;
 
-import com.example.userserivcel.dto.UserDto;
-import com.example.userserivcel.service.UserService;
-import com.example.userserivcel.vo.RequestLogin;
+import com.example.userserivce.dto.UserDto;
+import com.example.userserivce.service.UserService;
+import com.example.userserivce.vo.RequestLogin;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;

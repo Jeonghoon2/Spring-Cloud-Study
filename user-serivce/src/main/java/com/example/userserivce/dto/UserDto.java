@@ -1,4 +1,4 @@
-package com.example.userserivcel.dto;
+package com.example.userserivce.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

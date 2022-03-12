@@ -1,6 +1,7 @@
 package com.example.orderservice.mapper;
 
 import com.example.orderservice.dto.OrderDto;
+import com.example.orderservice.vo.OrderVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface OrderMapper {
 
     OrderDto findByOrderId(Integer orderId);
 
-    List<OrderDto> findByUserEmail(String userEmail);
+    List<OrderVo> getOrderByUserEmail(String userEmail);
 }

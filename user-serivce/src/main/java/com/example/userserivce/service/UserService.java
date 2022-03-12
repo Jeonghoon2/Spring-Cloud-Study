@@ -1,16 +1,21 @@
-package com.example.userserivcel.service;
+package com.example.userserivce.service;
 
-import com.example.userserivcel.dto.OrderDto;
-import com.example.userserivcel.dto.UserDto;
-import com.example.userserivcel.mapper.UserMapper;
+import com.example.userserivce.dto.OrderDto;
+import com.example.userserivce.dto.UserDto;
+import com.example.userserivce.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,6 +28,8 @@ public class UserService implements UserDetailsService {
 
     final UserMapper userMapper;
     final BCryptPasswordEncoder passwordEncoder;
+    final Environment env;
+    final RestTemplate restTemplate;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -37,9 +44,14 @@ public class UserService implements UserDetailsService {
     }
 
     @Autowired
-    public UserService(UserMapper userMapper, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserMapper userMapper,
+                       BCryptPasswordEncoder passwordEncoder,
+                       Environment env,
+                       RestTemplate restTemplate) {
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.env = env;
+        this. restTemplate = restTemplate;
     }
 
     //Now time
@@ -53,13 +65,24 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto getUserById(String userid) {
-    UserDto userDto = userMapper.getUserById(userid);
+        UserDto userDto = userMapper.getUserById(userid);
         if (userDto == null){
             throw new UsernameNotFoundException("User not found");
         }
+        String orderUrl = String.format(env.getProperty("order_service.url"),userDto.getEmail());
 
-        List<OrderDto> orders = new ArrayList<>();
-        userDto.setOrders(orders);
+//      orderDto 불러오기
+//      Using as rest Template
+        ResponseEntity<List<OrderDto>> orderListResponse = restTemplate.exchange(
+                orderUrl,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+        });
+
+        List<OrderDto> ordersList = orderListResponse.getBody();
+
+        userDto.setOrders(ordersList);
 
         return userDto;
     }

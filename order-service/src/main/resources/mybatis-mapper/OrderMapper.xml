@@ -5,6 +5,13 @@
 
 <mapper namespace="com.example.orderservice.mapper.OrderMapper">
 
+    <resultMap type="com.example.orderservice.dto.OrderDto"
+               id="orderInfo" >
+        <result property="productId" column="product_id"/>
+        <result property="qty" column="qty"/>
+        <result property="unitPrice" column="unit_price"/>
+    </resultMap>
+
     <insert id="createOrder" parameterType="com.example.orderservice.dto.OrderDto">
         INSERT INTO orders (
             order_id,
@@ -31,7 +38,7 @@
         where order_id = #{orderId}
     </select>
 
-    <select id="findByUserEmail" parameterType="java.util.HashMap" resultType="Map">
+    <select id="getOrderByUserEmail" resultMap="orderInfo" resultType="Map">
         select *
         from orders
         where user_email = #{userEmail}

@@ -1,6 +1,6 @@
-package com.example.userserivcel.security;
+package com.example.userserivce.security;
 
-import com.example.userserivcel.service.UserService;
+import com.example.userserivce.service.UserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,12 +29,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         /*http.authorizeHttpRequests().antMatchers("/users/**").permitAll();*/
         http.authorizeRequests().antMatchers("/actuator/**").permitAll();
+//      연구실 아이피
         http.authorizeRequests().antMatchers("/**")
                 .hasIpAddress("192.168.0.15")
                 .and()
                 .addFilter(getAuthenticationFilter());
-
-        http.headers().frameOptions().disable();
     }
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception {

@@ -2,11 +2,13 @@ package com.example.orderservice.service;
 
 import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.mapper.OrderMapper;
+import com.example.orderservice.vo.OrderVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -30,8 +32,8 @@ public class OrderService {
         return orderMapper.findByOrderId(orderId);
     }
 
-    public Iterable<OrderDto> findByUserEmail(String userEmail){
-        return orderMapper.findByUserEmail(userEmail);
+    public List<OrderVo> getOrderByUserEmail(String userEmail){
+        return orderMapper.getOrderByUserEmail(userEmail);
     }
 
 }

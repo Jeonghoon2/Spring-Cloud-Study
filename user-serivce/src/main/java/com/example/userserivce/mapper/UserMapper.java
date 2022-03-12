@@ -1,6 +1,6 @@
-package com.example.userserivcel.mapper;
+package com.example.userserivce.mapper;
 
-import com.example.userserivcel.dto.UserDto;
+import com.example.userserivce.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

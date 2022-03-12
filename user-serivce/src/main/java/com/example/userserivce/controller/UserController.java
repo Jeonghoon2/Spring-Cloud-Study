@@ -1,7 +1,7 @@
-package com.example.userserivcel.controller;
+package com.example.userserivce.controller;
 
-import com.example.userserivcel.dto.UserDto;
-import com.example.userserivcel.service.UserService;
+import com.example.userserivce.dto.UserDto;
+import com.example.userserivce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.example.userserivcel.vo;
+package com.example.userserivce.vo;
 
 import lombok.Data;
 

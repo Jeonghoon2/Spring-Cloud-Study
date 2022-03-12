@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/order-service")
 @Slf4j
@@ -21,9 +23,9 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/{userEmail}/order")
+    @PostMapping("/{userId}/order")
     public ResponseEntity createOrder(
-            @PathVariable("userEmail") String userEmail,
+            @PathVariable("userId") String userEmail,
             @RequestBody OrderDto orderDto){
         orderDto.setUserEmail(userEmail);
         orderService.createOrder(orderDto);
@@ -32,16 +34,17 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}/order")
-    public ResponseEntity<OrderDto> findByOrderId(@PathVariable("orderId")Integer orderId){
+    public ResponseEntity<OrderDto> findByOrderId(
+            @PathVariable("orderId")Integer orderId){
         OrderDto orderDto = orderService.findByOrderId(orderId);
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
     }
 
     @GetMapping("/{userEmail}/orders")
-    public Iterable<OrderDto> getOrderByUserId(
+    public List<OrderVo> getOrderByUserEmail(
             @PathVariable("userEmail") String userEmail)
     {
-     return orderService.findByUserEmail(userEmail);
+     return orderService.getOrderByUserEmail(userEmail);
     }
 
 

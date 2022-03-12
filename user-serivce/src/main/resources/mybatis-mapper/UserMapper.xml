@@ -3,9 +3,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.userserivcel.mapper.UserMapper">
+<mapper namespace="com.example.userserivce.mapper.UserMapper">
 
-    <resultMap type="com.example.userserivcel.dto.UserDto"
+    <resultMap type="com.example.userserivce.dto.UserDto"
                id="userInfo" >
         <result property="email" column="email"/>
         <result property="name" column="name"/>
@@ -14,7 +14,21 @@
         <result property="userId" column="user_id"/>
     </resultMap>
 
-    <insert id="createUser" parameterType="com.example.userserivcel.dto.UserDto">
+    <resultMap type="com.example.userserivce.dto.OrderDto"
+               id="orderInfo" >
+        <result property="productId" column="product_id"/>
+        <result property="qty" column="qty"/>
+        <result property="unitPrice" column="unit_price"/>
+        <result property="totalPrice" column="total_price"/>
+        <result property="createdAt" column="create_at"/>
+    </resultMap>
+
+    <resultMap id="joinOrderUser" type="com.example.userserivce.dto.OrderJoinUser">
+        <collection property="gallery" resultMap="GalleryInfo"/>
+        <collection property="user" resultMap="UserInfo"/>
+    </resultMap>
+
+    <insert id="createUser" parameterType="com.example.userserivce.dto.UserDto">
         INSERT INTO user (email,
                           name,
                           password,
@@ -34,10 +48,10 @@
         FROM user
     </select>
 
-    <select id="getUserById" resultType="com.example.userserivcel.dto.UserDto">
+    <select id="getUserById" resultMap="userInfo" resultType="Map">
         SELECT *
         FROM user
-        where userid = #{userid}
+        where user_id = #{userid}
     </select>
 
     <select id="findByEmail" resultMap="userInfo">
