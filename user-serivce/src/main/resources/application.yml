@@ -30,7 +30,7 @@ eureka:
 
 logging:
   level:
-    com.example.userservicel: off
+    com.example.userservicel.client: DEBUG
 
 management:
   endpoints:

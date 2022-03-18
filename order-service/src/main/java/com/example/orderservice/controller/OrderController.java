@@ -41,10 +41,13 @@ public class OrderController {
     }
 
     @GetMapping("/{userEmail}/orders")
-    public List<OrderVo> getOrderByUserEmail(
+    public ResponseEntity<List<OrderVo>> getOrderByUserEmail(
             @PathVariable("userEmail") String userEmail)
     {
-     return orderService.getOrderByUserEmail(userEmail);
+     List<OrderVo> order = orderService.getOrderByUserEmail(userEmail);
+     return ResponseEntity.status(HttpStatus.OK).body(order);
+
+
     }
 
 

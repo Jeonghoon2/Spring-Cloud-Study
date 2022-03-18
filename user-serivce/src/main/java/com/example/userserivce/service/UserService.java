@@ -1,8 +1,11 @@
 package com.example.userserivce.service;
 
+import com.example.userserivce.client.OrderServiceClient;
 import com.example.userserivce.dto.OrderDto;
 import com.example.userserivce.dto.UserDto;
 import com.example.userserivce.mapper.UserMapper;
+import com.example.userserivce.vo.OrderVo;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -30,6 +33,7 @@ public class UserService implements UserDetailsService {
     final BCryptPasswordEncoder passwordEncoder;
     final Environment env;
     final RestTemplate restTemplate;
+    final OrderServiceClient orderServiceClient;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -47,11 +51,13 @@ public class UserService implements UserDetailsService {
     public UserService(UserMapper userMapper,
                        BCryptPasswordEncoder passwordEncoder,
                        Environment env,
-                       RestTemplate restTemplate) {
+                       RestTemplate restTemplate,
+                       OrderServiceClient orderServiceClient) {
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.env = env;
         this. restTemplate = restTemplate;
+        this.orderServiceClient = orderServiceClient;
     }
 
     //Now time
@@ -69,22 +75,33 @@ public class UserService implements UserDetailsService {
         if (userDto == null){
             throw new UsernameNotFoundException("User not found");
         }
-        String orderUrl = String.format(env.getProperty("order_service.url"),userDto.getEmail());
+        List<OrderVo> ordersList = null;
 
-//      orderDto 불러오기
-//      Using as rest Template
-        ResponseEntity<List<OrderDto>> orderListResponse = restTemplate.exchange(
+        /* Feign Client*/
+        /* Feign Eception handling*/
+        /*try {
+            ordersList = orderServiceClient.getOrders(userDto.getEmail());
+        }catch (FeignException ex){
+            log.error(ex.getMessage());
+        }*/
+        /*GETERRORDECODER*/
+        ordersList = orderServiceClient.getOrders(userDto.getEmail());
+        userDto.setOrders(ordersList);
+        return userDto;
+
+
+
+        /*
+        String orderUrl = String.format(env.getProperty("order_service.url"),userDto.getEmail());
+        ResponseEntity<List<OrderVo>> orderListResponse = restTemplate.exchange(
                 orderUrl,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() {
         });
+        List<OrderVo> ordersList = orderListResponse.getBody();*/
+        /* Using as rest Template */
 
-        List<OrderDto> ordersList = orderListResponse.getBody();
-
-        userDto.setOrders(ordersList);
-
-        return userDto;
     }
 
     public Iterable<UserDto> userByAll(){

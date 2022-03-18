@@ -1,5 +1,6 @@
 package com.example.userserivce.dto;
 
+import com.example.userserivce.vo.OrderVo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -19,6 +20,6 @@ public class UserDto {
     private LocalDate createAt;
     private String userId;
 
-    private List<OrderDto> orders;
+    private List<OrderVo> orders;
 
 }
